@@ -24,11 +24,14 @@ async function processLink(
 
   const staysCount = await getStaysCountFromPage(page);
 
+  console.log("Stays count on page: ", staysCount);
   if (!staysCount) return;
 
   const lastCount = await db.select().from(links).where(eq(links.link, link));
+  console.log("Last stays count: ", lastCount[0]?.staysCount);
 
   if (!lastCount[0] || lastCount[0].staysCount !== staysCount) {
+    console.log("Found new stays!");
     onCountChange();
   }
 
