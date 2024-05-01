@@ -10,14 +10,18 @@ export async function getStaysCountFromPage(page: Page) {
   const isHeadingVisible = await staysHeading.isVisible();
 
   if (!isHeadingVisible) {
+    console.log("Heading not visible");
     return;
   }
 
   const staysHeadingText = await staysHeading.allInnerTexts();
 
   if (!staysHeadingText) {
+    console.log("Heading text not found");
     return;
   }
+
+  console.log("Heading text: ", staysHeadingText);
 
   const staysCountText = staysHeadingText[0].match(/^[^\d]*(\d+)/);
   const staysCount =
