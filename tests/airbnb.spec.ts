@@ -20,7 +20,7 @@ async function processLink(
   onCountChange: () => void
 ) {
   console.log("Checking link: ", link);
-  await page.goto(link);
+  await page.goto(link, { waitUntil: "networkidle" });
 
   const staysCount = await getStaysCountFromPage(page);
 
