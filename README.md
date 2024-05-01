@@ -1,4 +1,4 @@
-Script to watch good deals on Airbnb (and more to come) that will be sent through a Telegram bot
+Script to watch deals on Airbnb (and more in the future) with Telegram bot integration
 
 Currently it only supports Polish Airbnb
 
@@ -12,7 +12,7 @@ TODO:
 - [ ] Make the Airbnb search work for all languages
 
 ## Setup
-1. Create `.env` file and provide
+1. Create `.env` file and fill in the values
 ```
 BOT_TOKEN=
 CHAT_ID=
