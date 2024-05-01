@@ -1,4 +1,4 @@
-import { Page, test } from "@playwright/test";
+import { Page, expect, test } from "@playwright/test";
 import { db } from "../db";
 import { links } from "../db/schema";
 import { eq } from "drizzle-orm";
@@ -20,7 +20,15 @@ async function processLink(
   onCountChange: () => void
 ) {
   console.log("Checking link: ", link);
-  await page.goto(link, { waitUntil: "networkidle" });
+  await page.goto(link);
+  page.waitForLoadState();
+
+  const listingLocator = page.locator("div[itemprop=itemListElement]").first();
+  const emptyListingsLocator = page.getByRole("heading", {
+    name: "Brak dokładnych dopasowań",
+  });
+
+  await expect(listingLocator.or(emptyListingsLocator)).toBeVisible();
 
   const staysCount = await getStaysCountFromPage(page);
 
