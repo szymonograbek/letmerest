@@ -1,0 +1,28 @@
+{
+  "name": "spanko-search",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate": "drizzle-kit generate:sqlite",
+    "push": "drizzle-kit push:sqlite",
+    "tests": "playwright test",
+    "parse:airbnb": "ts-node parseAirbnbLink.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.43.1",
+    "@types/node": "^20.12.7",
+    "drizzle-kit": "^0.20.17",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "better-sqlite3": "^9.6.0",
+    "date-fns": "^3.6.0",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.30.9",
+    "telegraf": "^4.16.3"
+  }
+}
