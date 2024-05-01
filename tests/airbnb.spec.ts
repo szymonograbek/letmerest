@@ -27,8 +27,11 @@ async function processLink(
   const emptyListingsLocator = page.getByRole("heading", {
     name: "Brak dokładnych dopasowań",
   });
+  const combinedLocator = page.getByText("Jedna podróż, dwa pobyty");
 
-  await expect(listingLocator.or(emptyListingsLocator)).toBeVisible();
+  await expect(
+    listingLocator.or(emptyListingsLocator).or(combinedLocator)
+  ).toBeVisible();
 
   const staysCount = await getStaysCountFromPage(page);
 
