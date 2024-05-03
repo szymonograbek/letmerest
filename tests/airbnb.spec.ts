@@ -10,7 +10,13 @@ import { Stay } from "../db/types";
 
 dotenv.config();
 
-async function processDetailsFromLink(page: Page, link: string) {
+type GeneratedPlace = Place & { link: string; start: Date; end: Date };
+
+async function processDetailsFromLink(
+  page: Page,
+  link: string,
+  generatedFromPlace?: GeneratedPlace
+) {
   console.log("Checking link: ", link);
 
   await page.goto(link);
@@ -85,12 +91,21 @@ async function processDetailsFromLink(page: Page, link: string) {
       .locator("meta[itemprop=name]")
       .getAttribute("content");
 
-    const dateAndHost = await listing
-      .getByTestId("listing-card-subtitle")
-      .last()
-      .locator("span[aria-hidden=true]")
-      .first()
-      .textContent();
+    // Use generated from place date as with selected dates in filters the date is not visible on the list
+    const generatedPlaceDate = generatedFromPlace
+      ? format(generatedFromPlace.start, "dd-MM-yyyy") +
+        " - " +
+        format(generatedFromPlace.end, "dd-MM-yyyy")
+      : null;
+
+    const date = !generatedFromPlace
+      ? await listing
+          .getByTestId("listing-card-subtitle")
+          .last()
+          .locator("span[aria-hidden=true]")
+          .first()
+          .textContent()
+      : generatedPlaceDate;
 
     const price = await listing
       .getByTestId("price-availability-row")
@@ -105,9 +120,9 @@ async function processDetailsFromLink(page: Page, link: string) {
     const newStay: Stay = {
       parentLink: link,
       name: name ?? "No name",
-      link: parsedURL.href ?? "No url",
+      link: parsedURL.href,
       price: price ?? "No price",
-      date: dateAndHost ?? "No date and host",
+      date: date ?? "No date",
       city: city ?? "No city",
     };
 
@@ -170,7 +185,7 @@ test("AirBnb generated links", async ({ page }) => {
     []
   );
 
-  const links: Array<Place & { link: string; start: Date; end: Date }> = [];
+  const links: Array<GeneratedPlace> = [];
 
   for (let place of airbnbConfig.places) {
     upcomingWeekendsDates.forEach((weekend) => {
@@ -207,8 +222,6 @@ test("AirBnb generated links", async ({ page }) => {
   }
 
   for (const place of links) {
-    const link = place.link;
-
-    await processDetailsFromLink(page, link);
+    await processDetailsFromLink(page, place.link, place);
   }
 });
