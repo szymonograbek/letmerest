@@ -3,11 +3,11 @@ Script to watch deals on Airbnb (and more in the future) with Telegram bot integ
 Currently it only supports Polish Airbnb
 
 TODO: 
-- [ ] Improve weekend search
-- [ ] Improve weekend-to-weekend search
+- [x] Improve weekend search
+- [x] Improve weekend-to-weekend search
 - [ ] Add more webistes for apartments
 - [ ] Add watcher for transports like trains or flights
-- [ ] Save what places did the user already see
+- [x] Save what places did the user already see
 - [ ] Adding links through the Telegram bot
 - [ ] Make the Airbnb search work for all languages
 
