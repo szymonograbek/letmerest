@@ -203,6 +203,7 @@ test("AirBnb generated links", async ({ page }) => {
       link.searchParams.append("price_max", place.priceMax.toString());
       link.searchParams.append("search_type", "filter_change");
       link.searchParams.append("room_types[]", "Entire home/apt");
+      link.searchParams.append("min_bathrooms", "1");
 
       if (place.map) {
         link.searchParams.append("sw_lat", place.map.sw.lat);

@@ -28,7 +28,7 @@ const zoom = url.searchParams.get("zoom");
 
 const place: Place = {
   name: nameMatch[1],
-  type: "all",
+  type: "weekend-to-weekend",
   id: url.searchParams.get("place_id")!,
   priceMax: price ? parseInt(price) : 500,
   map: {
